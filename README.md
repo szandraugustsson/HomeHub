@@ -240,7 +240,7 @@ sudo systemctl status homehub.service
 ```
 ### View database contents
 ```bash
-sqlite3 sensor_data.db "SELECT * FROM telemetry;"
+sqlite3 ./raspberry_pi/sensor_data.db "SELECT * FROM telemetry;"
 ```
 ---
 ## Cleanup Script
