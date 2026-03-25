@@ -11,6 +11,8 @@ __pycache__/
 raspberry_pi/certs/*
 # README.md in certs folder so people know how to create certs
 !raspberry_pi/certs/README.md
+# Track generate_certs.sh
+!raspberry_pi/certs/generate_certs.sh
 
 # Environment config
 .env
