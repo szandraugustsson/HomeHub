@@ -125,7 +125,7 @@ sudo cp raspberry_pi/mqtt_setup/mosquitto_conf_example.conf /etc/mosquitto/conf.
 ```
 ### 2. Configure Mosquitto
 ```bash
-vim /etc/mosquitto/conf.d/external.conf:
+vim /etc/mosquitto/conf.d/external.conf
 ```
 Paste:
 ```bash
