@@ -158,7 +158,6 @@ sudo systemctl restart mosquitto
 ---
 ## Initialize SQLite Database
 ```bash
-cd raspberry_pi
 ./init_db.sh
 ```
 This creates `sensor_data.db` with a `telemetry` table containing:
