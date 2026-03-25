@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# SQLite-database
+*.db
+
+# TLS-certificate
+raspberry_pi/certs/*
+# README.md in certs folder so people know how to create certs
+!raspberry_pi/certs/README.md
+
+# Environment config
+.env
+
+#Logs
+.log
+
+# Vim swap files
+*.swp
