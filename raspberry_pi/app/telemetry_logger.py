@@ -1,6 +1,9 @@
 import os
+import os
 import ssl
 import sqlite3
+import requests
+import json
 import paho.mqtt.client as mqtt
 from dotenv import load_dotenv
 
@@ -15,6 +18,10 @@ MQTT_PW = os.getenv("MQTT_PW", "your_password")
 MQTT_TOPIC = os.getenv("MQTT_TOPIC", "your_topic")
 CA_CERT = os.path.abspath(os.getenv("CA_CERT_PATH", "raspberry_pi/certs/ca.crt"))
 DB_PATH = os.getenv("DB_PATH", "your_path_to_database")
+TB_TOKEN = os.getenv("THINGSBOARD_TOKEN", "your_fallback_token") # env field for dashboard accesstoken
+
+# Thingsboard endpoint
+tb_url = f"https://thingsboard.cloud/api/v1/{TB_TOKEN}/telemetry"
 
 # Setup SQLite
 conn = sqlite3.connect(DB_PATH, check_same_thread=False)
@@ -27,6 +34,21 @@ def on_message(client, userdata, msg):
         cursor.execute("INSERT INTO telemetry (topic, value) VALUES (?, ?)", (msg.topic, value))
         conn.commit()
         print(f"Saved: {msg.topic} -> {value}")
+
+# Allt som sparas lokalt sparas till thingsboard med identisk key/vlaue
+
+        try:
+            cloud_key = msg.topic.replace("/", "_")
+            cloud_payload = {cloud_key: value, "status": "SECURE"}
+            response = requests.post(tb_url, json=cloud_payload, timeout=5)
+
+            if response.status_code == 200:
+                print("Saved to cloud")
+            else:
+                print("Cloud Sync failed: {response.status_code}")
+        except Exception as cloud_err:
+            print(f"Cloud error (check connection): {cloud_err}")
+
     except Exception as e:
         print(f"Error: {e}")
 
@@ -42,7 +64,7 @@ client.tls_set(
     keyfile=None,
     tls_version=ssl.PROTOCOL_TLS_CLIENT,
 )
-client.tls_insecure_set(False)
+client.tls_insecure_set(True)
 
 try:
     client.connect(MQTT_BROKER, MQTT_PORT, 60)
