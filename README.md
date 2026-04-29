@@ -122,6 +122,7 @@ Configure Mosquitto if needed:
 vim /etc/mosquitto/conf.d/external.conf
 ```
 ### 3. Create user/password
+Replace 'your_user' with your actual username!
 ```bash
 sudo mosquitto_passwd -c /etc/mosquitto/passwd your_user
 ```
