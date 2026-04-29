@@ -225,14 +225,18 @@ sudo systemctl status homehub.service
 ```   
 ---
 ## Testing
+You need TWO terminals for this test:
 
-### Publish Example Data
-```bash
-./scripts/publish_test.sh
-```
+- Terminal 1: runs the subscriber (listens for messages)
+- Terminal 2: sends test data (publisher)
+
 ### Subscribe and View Data
 ```bash
 ./scripts/subscribe_test.sh
+```
+### Publish Example Data
+```bash
+./scripts/publish_test.sh
 ```
 ### View database contents
 ```bash
