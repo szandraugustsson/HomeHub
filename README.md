@@ -256,10 +256,11 @@ chmod +x raspberry_pi/cleanup.sh
 crontab -e
 ```
 ### 3. Add this line (runs daily at 03:00):
+Make sure the path `/home/dev/HomeHub/raspberry_pi/cleanup.sh` matches your installation directory.
+
 ```bash
 0 3 * * * /home/dev/HomeHub/raspberry_pi/cleanup.sh
 ```
-Make sure the path `/home/dev/HomeHub/raspberry_pi/cleanup.sh` matches your installation directory.
 ---
 ## Notes
 
