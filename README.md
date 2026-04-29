@@ -263,21 +263,19 @@ Make sure the path `/home/dev/HomeHub/raspberry_pi/cleanup.sh` matches your inst
 ```
 ---
 ## Debug & Monitoring Commands
-### 1.Live view of latest database entries (SQLite)
+### 1. Live view of latest database entries (SQLite)
 Continuously monitor the latest sensor data stored in the database:
 ```bash
 watch -n 1 'sqlite3 ./raspberry_pi/sensor_data.db "SELECT * FROM telemetry ORDER BY id DESC LIMIT 5;"'
 ```
-What it does:
 - Refreshes every 1 second
 - Shows the 5 most recent telemetry entries
 - Useful for verifying that MQTT → Python → DB pipeline is working in real time
 
-### 2.Monitor Mosquitto broker logs
+### 2. Monitor Mosquitto broker logs
 ```bash
 sudo tail -f /var/log/mosquitto/mosquitto.log
 ```
-What it does:
 - Streams live broker logs
 - Shows:
    - incoming MQTT messages
@@ -291,7 +289,6 @@ mosquitto_sub -h rpi-001.local -p 8883 \
   -u dev -P dev \
   -t "#" -d
 ```
-What it does:
 - Subscribes to ALL topics (#)
 - Uses TLS-secured MQTT connection (port 8883)
 - Prints full debug output (-d)
