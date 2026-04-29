@@ -107,17 +107,15 @@ Generate TLS certificates using the provided script `generate_certs.sh`.
 ```bash
 chmod +x raspberry_pi/certs/generate_certs.sh
 ```
-### 2. Run it:
+### 2. Replace host with your Raspberry Pi Zero hostname:
+```bash
+vim raspberry_pi/certs/generate_certs.sh
+```
+HOST=rpi-001.local #Replace it with your hostname
+
+### 3. Run it:
 ```bash
 ./raspberry_pi/certs/generate_certs.sh
-```
-### 3. Copy the certificates to Mosquitto and set permissions:
-```bash
-sudo mkdir -p /etc/mosquitto/certs
-sudo cp raspberry_pi/certs/*.crt /etc/mosquitto/certs/
-sudo cp raspberry_pi/certs/*.key /etc/mosquitto/certs/
-sudo chown mosquitto:mosquitto /etc/mosquitto/certs/*
-sudo chmod 600 /etc/mosquitto/certs/*
 ```
 ---
 ## MQTT Configuration
