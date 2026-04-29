@@ -91,16 +91,6 @@ cp .env.example .env
 ```bash   
 vim .env
 ```
-```bash
-MQTT_BROKER=localhost
-MQTT_PORT=8883
-MQTT_USER=your_user
-MQTT_PW=your_password
-MQTT_TOPIC=sensors/#
-CA_CERT_PATH=your_path
-DB_PATH=raspberry_pi/sensor_data.db
-THINGSBOARD_TOKEN=your_token
-```
 ---
 ## TLS Certificate Generation
 
