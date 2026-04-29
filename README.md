@@ -195,12 +195,24 @@ After=network.target
 Type=simple
 User=dev
 WorkingDirectory=/home/dev/HomeHub
-ExecStart=/home/dev/HomeHub/venv/bin/python3 /home/dev/HomeHub/raspberry_pi/app/telemetry_logger.py
-Restart=always
+
+EnvironmentFile=/home/dev/HomeHub/.env
+
+ExecStart=/home/dev/HomeHub/venv/bin/python /home/dev/HomeHub/raspberry_pi/app/telemetry_logger.py
+
+Restart=on-failure
+RestartSec=5
+
+NoNewPrivileges=true
 
 [Install]
 WantedBy=multi-user.target
 ```
+Make sure to update all environment-specific values:
+
+- Replace "dev" with your system username
+- Update file paths to match your installation directory
+
 3. Enable and start the service:
 ```bash
 sudo systemctl daemon-reload
