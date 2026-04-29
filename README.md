@@ -30,7 +30,7 @@ HomeHub/
 │   │   ├── README.md                    # tracked
 │   │   ├── server.crt                   # not in GitHub
 │   │   ├── server.key                   # not in GitHub (private key!)
-│   │   └──server.csr                    # not in GitHub
+│   │   └── server.csr                   # not in GitHub
 │   ├── cleanup.sh                       # tracked
 │   ├── init_db.sh                       # tracked
 │   ├── mqtt_setup/
