@@ -1,7 +1,9 @@
 #!/bin/bash
+set -e
+
 # Initialize SQLite database with telemetry table and timestamp index
 
-DB_FILE="sensor_data.db"
+DB_FILE="$(dirname "$0")/sensor_data.db"
 
 echo "Initializing SQLite database at $DB_FILE..."
 
