@@ -124,18 +124,9 @@ HOST=rpi-001.local #Replace it with your hostname
 ```bash
 sudo cp raspberry_pi/mqtt_setup/mosquitto_conf_example.conf /etc/mosquitto/conf.d/external.conf
 ```
-### 2. Configure Mosquitto
+Configure Mosquitto if needed:
 ```bash
 vim /etc/mosquitto/conf.d/external.conf
-```
-Paste:
-```bash
-listener 8883
-allow_anonymous false
-password_file /etc/mosquitto/passwd
-
-certfile /etc/mosquitto/certs/server.crt
-keyfile /etc/mosquitto/certs/server.key
 ```
 ### 3. Create user/password
 ```bash
