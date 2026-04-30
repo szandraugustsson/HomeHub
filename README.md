@@ -189,7 +189,8 @@ sudo vim /etc/systemd/system/homehub.service
 ```bash
 [Unit]
 Description=HomeHub Telemetry Logger
-After=network.target
+After=network-online.target mosquitto.service
+Wants=network-online.target
 
 [Service]
 Type=simple
@@ -200,7 +201,7 @@ EnvironmentFile=/home/dev/HomeHub/.env
 
 ExecStart=/home/dev/HomeHub/venv/bin/python /home/dev/HomeHub/raspberry_pi/app/telemetry_logger.py
 
-Restart=on-failure
+Restart=always
 RestartSec=5
 
 NoNewPrivileges=true
