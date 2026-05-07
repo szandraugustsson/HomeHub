@@ -35,34 +35,50 @@ def on_disconnect(client, userdata, rc):
 
 def on_message(client, userdata, msg):
     print("MQTT RECEIVED:", msg.topic, msg.payload)
+
     try:
         payload_str = msg.payload.decode("utf-8").strip()
+
         try:
-            value = float(payload_str)
-        except ValueError:
-            print(f"Invalid payload: {payload_str}")
-            return
+            data = json.loads(payload_str)
 
-        if value == -127.0 or value == 127.0:
-            print("Ignored sensor error value")
-            return
+            for key, value in data.items():
 
-        cursor.execute(
-            "INSERT INTO telemetry (topic, value) VALUES (?, ?)",
-            (msg.topic, value)
-        )
-        conn.commit()
-        print(f"Saved: {msg.topic} -> {value}")
+                if isinstance(value, (int, float)):
 
-        cloud_key = msg.topic.replace("/", "_")
-        cloud_payload = {cloud_key: value, "status": "SECURE"}
+                    cursor.execute(
+                        "INSERT INTO telemetry (topic, value) VALUES (?, ?)",
+                        (f"{msg.topic}/{key}", value)
+                    )
+                    conn.commit()
 
-        response = requests.post(tb_url, json=cloud_payload, timeout=5)
+                    print(f"Saved: {key} -> {value}")
 
-        if response.status_code == 200:
-            print("Saved to cloud")
-        else:
-            print(f"Cloud Sync failed: {response.status_code}")
+            print("Sending to ThingsBoard:", data)
+            response = requests.post(tb_url, json=data, timeout=5)
+            print("ThingsBoard response:", response.status_code, response.text)
+
+        except json.JSONDecodeError:
+
+            try:
+                value = float(payload_str)
+
+                cursor.execute(
+                    "INSERT INTO telemetry (topic, value) VALUES (?, ?)",
+                    (msg.topic, value)
+                )
+                conn.commit()
+
+                requests.post(
+                    tb_url,
+                    json={msg.topic.replace("/", "_"): value},
+                    timeout=5
+                )
+
+                print(f"Saved (legacy): {msg.topic} -> {value}")
+
+            except ValueError:
+                print(f"Ignored invalid payload: {payload_str}")
 
     except Exception as e:
         print(f"Error: {e}")
